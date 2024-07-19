@@ -1,9 +1,14 @@
 import { queryOptions, useQuery } from '@tanstack/react-query';
 import { getCategories } from './get-categories';
 import { QueryConfig } from '@/lib/react-query';
+import { Category } from '@/types/api';
 
-export const getCategory = (categoryId: string) => {
-  return getCategories().find((category) => category.id === categoryId);
+export const getCategory = async (categoryId: string) : Promise<Category | undefined> => {
+  const categories = await getCategories()
+
+  const category =  categories.find((category) => category.id == categoryId);
+  console.log(categories)
+  return category;
 };
 
 export const getCategoryQueryOptions = (categoryId: string) => {

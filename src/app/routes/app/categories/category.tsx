@@ -8,8 +8,9 @@ export const CategoryRoute = () => {
   const navigate = useNavigate();
 
   const categoryId = params.categoryId as string;
-  const { data: category } = useCategory({ categoryId });
 
+  const { data: category } = useCategory({ categoryId });
+  console.log(category);
   if (!category) return null;
 
   return (
@@ -20,7 +21,7 @@ export const CategoryRoute = () => {
       </div>
       <div className="flex flex-row gap-x-10">
         <img
-          src={category.image}
+          src={'/categories/history.jpeg'}
           alt="category image"
           className="w-96 h-52 rounded-basic"
         />

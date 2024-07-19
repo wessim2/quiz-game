@@ -1,12 +1,12 @@
 import { CategoryCards } from '@/components/ui/cards/category-card';
 import Heading from '@/components/ui/heading/heading';
 import { useCategories } from '@/features/categories/api/get-categories';
-import React from 'react';
 
 export const CategoriesRoute = () => {
   const categories = useCategories();
 
   if (!categories.data) return null;
+  console.log(categories.data);
 
   return (
     <div className="flex flex-col">
@@ -18,7 +18,7 @@ export const CategoriesRoute = () => {
             <CategoryCards
               id={category.id}
               name={category.name}
-              image={category.image}
+              image={category.name}
               key={category.id}
             />
           );

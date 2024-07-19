@@ -34,7 +34,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       </header>
 
       <div className="flex flex-row flex-1">
-        <aside className=" hidden w-60 flex-col bg-whitedefault sm:flex">
+        <aside className="hidden w-60 left-0 flex-col bg-whitedefault sm:flex">
           <nav className="flex flex-col items-center px-2 py-4 mx-2 justify-between h-full">
             <div className="flex flex-col items-center gap-4 px-2 py-4 mx-2 ">
               {navigation.map((item) => (
