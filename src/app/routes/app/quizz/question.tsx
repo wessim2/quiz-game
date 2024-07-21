@@ -1,5 +1,5 @@
 import Button from '@/components/ui/button/button';
-import { shuffle } from '@/utils/helpers';
+import { removeCharacters, shuffle } from '@/utils/helpers';
 import clsx from 'clsx';
 import { useMemo, useState } from 'react';
 
@@ -31,7 +31,7 @@ export const Question = ({ data }: any) => {
     const calculatedScore = Object.keys(selectedAnswers).reduce((acc, curr) => {
       const ind = parseInt(curr);
       if (selectedAnswers[ind] == questionAnswers[ind].correct_answer) {
-        acc = acc + 1;
+        acc++;
       }
       return acc;
     }, 0);
@@ -45,7 +45,7 @@ export const Question = ({ data }: any) => {
   return (
     <>
       <p className="text-gray-typo font-bold">
-        Question : {questionAnswers[index].question}
+        Question : {removeCharacters(questionAnswers[index].question)}
       </p>
       <ul className="flex flex-col gap-4">
         {questionAnswers[index].answers.map((answer: any) => {

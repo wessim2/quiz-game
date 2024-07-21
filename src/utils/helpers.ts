@@ -5,3 +5,7 @@ export const shuffle = (array : any[]) => {
     } 
     return array; 
   }; 
+
+export function removeCharacters(question:string) {
+    return question.replace(/(&quot\;)/g, "\"").replace(/(&rsquo\;)/g, "\"").replace(/(&#039\;)/g, "\'").replace(/(&amp\;)/g, "\"");
+  }
