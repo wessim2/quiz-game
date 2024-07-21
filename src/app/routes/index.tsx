@@ -38,6 +38,13 @@ export const createRouter = (queryClient: QueryClient) =>
             return { Component: CategoryRoute };
           },
         },
+        {
+          path: 'quizz',
+          lazy: async () => {
+            const { QuizzRoute } = await import('./app/quizz/quizz');
+            return { Component: QuizzRoute };
+          },
+        },
       ],
     },
   ]);
