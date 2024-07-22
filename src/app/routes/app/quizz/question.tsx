@@ -1,6 +1,6 @@
 import Button from '@/components/ui/button/button';
-import { removeCharacters, shuffle } from '@/utils/helpers';
-import { useMemo, useState } from 'react';
+import { formatTime, removeCharacters, shuffle } from '@/utils/helpers';
+import { useEffect, useMemo, useState } from 'react';
 import { AlertSubmitQuiz } from './AlertSubmitQuiz';
 import Heading from '@/components/ui/heading/heading';
 import { ButtonAnswer } from './ButtonAnswer';
@@ -12,6 +12,8 @@ export const Question = ({ data }: any) => {
   }>({});
   const [score, setScore] = useState(0);
   const [quizEnd, setQuizEnd] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(5);
+
   const questionAnswers = useMemo(() => {
     return data.map((item: any) => {
       const { question, correct_answer, incorrect_answers } = item;
@@ -19,6 +21,19 @@ export const Question = ({ data }: any) => {
       return { question, answers, correct_answer };
     });
   }, [data]);
+
+  // Timer logic
+  useEffect(() => {
+    if (timeLeft > 0) {
+      const timer = setInterval(() => {
+        setTimeLeft((prevTime) => prevTime - 1);
+      }, 1000);
+
+      return () => clearInterval(timer);
+    } else {
+      handleSubmitQuizz();
+    }
+  }, [timeLeft]);
 
   const handleNextQuestion = () => {
     setIndex((prev) => prev + 1);
@@ -38,18 +53,19 @@ export const Question = ({ data }: any) => {
       return acc;
     }, 0);
     setScore(calculatedScore);
-    console.log(calculatedScore);
+    setQuizEnd(true);
   };
 
   const handleSelectedAnswer = (questionIndex: any, answer: any) => {
     setSelectedAnswers((prev: any) => ({ ...prev, [questionIndex]: answer }));
   };
-  console.log(selectedAnswers);
+
   return (
     <>
-      <p className="text-gray-typo font-bold">
+      <p className=" text-gray-typo font-bold">
         Question : {removeCharacters(questionAnswers[index].question)}
       </p>
+      <p>Time Left : {formatTime(timeLeft)}</p>
       <ul className="flex flex-col gap-4">
         {questionAnswers[index].answers.map((answer: any) => {
           return (
