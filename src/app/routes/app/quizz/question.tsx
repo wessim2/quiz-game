@@ -1,7 +1,9 @@
 import Button from '@/components/ui/button/button';
 import { removeCharacters, shuffle } from '@/utils/helpers';
-import clsx from 'clsx';
 import { useMemo, useState } from 'react';
+import { AlertSubmitQuiz } from './AlertSubmitQuiz';
+import Heading from '@/components/ui/heading/heading';
+import { ButtonAnswer } from './ButtonAnswer';
 
 export const Question = ({ data }: any) => {
   const [index, setIndex] = useState(0);
@@ -9,7 +11,7 @@ export const Question = ({ data }: any) => {
     [key: number]: string;
   }>({});
   const [score, setScore] = useState(0);
-
+  const [quizEnd, setQuizEnd] = useState(false);
   const questionAnswers = useMemo(() => {
     return data.map((item: any) => {
       const { question, correct_answer, incorrect_answers } = item;
@@ -36,6 +38,7 @@ export const Question = ({ data }: any) => {
       return acc;
     }, 0);
     setScore(calculatedScore);
+    console.log(calculatedScore);
   };
 
   const handleSelectedAnswer = (questionIndex: any, answer: any) => {
@@ -50,16 +53,15 @@ export const Question = ({ data }: any) => {
       <ul className="flex flex-col gap-4">
         {questionAnswers[index].answers.map((answer: any) => {
           return (
-            <Button
+            <ButtonAnswer
+              answer={answer}
+              handleSelectedAnswer={handleSelectedAnswer}
+              index={index}
+              questionAnswers={questionAnswers}
+              quizEnd={quizEnd}
+              selectedAnswers={selectedAnswers}
               key={answer}
-              variant={'outline'}
-              className={clsx('hover:bg-slate-300', {
-                'border-yellow-400 border-4': selectedAnswers[index] === answer,
-              })}
-              onClick={() => handleSelectedAnswer(index, answer)}
-            >
-              {answer}
-            </Button>
+            />
           );
         })}
       </ul>
@@ -68,11 +70,17 @@ export const Question = ({ data }: any) => {
           Previous
         </Button>
         {index == questionAnswers.length - 1 ? (
-          <Button onClick={handleSubmitQuizz}>Submit</Button>
+          <AlertSubmitQuiz
+            quizEnd={quizEnd}
+            handleSubmitQuizz={handleSubmitQuizz}
+            score={score}
+            setQuizEnd={setQuizEnd}
+          />
         ) : (
           <Button onClick={handleNextQuestion}>Next</Button>
         )}
       </div>
+      {quizEnd && <Heading>Your Score is {score}</Heading>}
     </>
   );
 };
