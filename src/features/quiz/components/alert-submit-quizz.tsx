@@ -14,14 +14,12 @@ import Button from '@/components/ui/button/button';
 type AlertSubmitQuizProps = {
   quizEnd: boolean;
   handleSubmitQuizz: () => void;
-  score: number;
   setQuizEnd: (state: boolean) => void;
 };
 
 export const AlertSubmitQuiz = ({
   quizEnd,
   handleSubmitQuizz,
-  score,
   setQuizEnd,
 }: AlertSubmitQuizProps) => {
   return (

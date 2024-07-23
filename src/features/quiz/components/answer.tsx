@@ -4,22 +4,26 @@ import clsx from 'clsx';
 type ButtonAnswerProps = {
   quizEnd: boolean;
   answer: string;
-  selectedAnswers: {
-    [key: number]: string;
-  };
+  setSelectedAnswers: React.Dispatch<
+    React.SetStateAction<{ [key: number]: string }>
+  >;
   index: number;
   questionAnswers: any;
-  handleSelectedAnswer: (index: number, answer: string) => void;
+  selectedAnswers: { [key: number]: string };
 };
 
-export const ButtonAnswer = ({
+export const Answer = ({
   quizEnd,
   answer,
-  selectedAnswers,
   index,
   questionAnswers,
-  handleSelectedAnswer,
+  selectedAnswers,
+  setSelectedAnswers,
 }: ButtonAnswerProps) => {
+  const handleSelectedAnswer = (questionIndex: any, answer: any) => {
+    setSelectedAnswers((prev: any) => ({ ...prev, [questionIndex]: answer }));
+  };
+
   return (
     <Button
       disabled={quizEnd}

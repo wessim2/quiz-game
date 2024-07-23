@@ -1,7 +1,7 @@
-import Button from '@/components/ui/button/button';
+import { Button } from '@/components/ui/button';
 import Heading from '@/components/ui/heading/heading';
 import { useCategory } from '@/features/categories/api/get-category';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 export const CategoryRoute = () => {
   const params = useParams();
@@ -10,22 +10,22 @@ export const CategoryRoute = () => {
   const categoryId = params.categoryId as string;
 
   const { data: category } = useCategory({ categoryId });
-  console.log(category);
+
   if (!category) return null;
 
   return (
-    <div className="flex flex-col h-full justify-between">
-      <div className="felx flex-col gap-y-4">
+    <div className="flex flex-col h-full justify-between gap-8">
+      <div className="flex flex-col gap-y-4 items-start">
         <Heading>{category.name} Quiz</Heading>
         <p className="text-gray-typo">Read the following instructions</p>
       </div>
-      <div className="flex flex-row gap-x-10">
+      <div className="flex flex-col lg:flex-row gap-x-10">
         <img
           src={'/categories/history.jpeg'}
           alt="category image"
           className="w-96 h-52 rounded-basic"
         />
-        <div className="flex flex-row gap-2">
+        <div className="flex flex-row gap-2 mt-3">
           <div className="flex flex-col gap-4">
             <p className="font-extrabold text-gray-typo text-2xl">Date :</p>
             <p className="font-extrabold text-gray-typo text-2xl">
@@ -58,14 +58,19 @@ export const CategoryRoute = () => {
       </div>
       <div className="flex flex-row justify-between">
         <Button
-          className="w-56 h-14"
+          variant={'primary'}
+          className="w-56 h-14 mb-3 lg:mb-0"
           onClick={() => {
             navigate(-1);
           }}
         >
           Return
         </Button>
-        <Button className="w-56 h-14">Start</Button>
+        <Link to={'/app/quizz'}>
+          <Button variant={'primary'} className="w-56 h-14">
+            Start
+          </Button>
+        </Link>
       </div>
     </div>
   );

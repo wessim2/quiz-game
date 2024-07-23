@@ -9,7 +9,7 @@ export const CategoriesRoute = () => {
   console.log(categories.data);
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col p-4">
       <Heading size={'h2'}>Select Topic</Heading>
       <p className="text-gray-typo">Featured Categories</p>
       <div className="grid grid-cols-4 grid-flow-row gap-y-7 mt-3">

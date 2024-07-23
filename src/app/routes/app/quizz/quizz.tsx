@@ -1,14 +1,14 @@
-import { useQuiz } from '@/features/quiz/get-quiz';
-import { Question } from './question';
+import { useQuiz } from '@/features/quiz/api/get-quiz';
+import { Questions } from '@/features/quiz/components/questions';
 
 export const QuizzRoute = () => {
-  const { data, isError, isLoading } = useQuiz();
+  const { data } = useQuiz();
 
   if (!data) return null;
 
   return (
     <div className="flex flex-col gap-6">
-      <Question data={data} />
+      <Questions data={data} />
     </div>
   );
 };

@@ -1,4 +1,3 @@
-import Button from '@/components/ui/button/button';
 import { CategoryCards } from '@/components/ui/cards/category-card';
 import Heading from '@/components/ui/heading/heading';
 import { useCategories } from '@/features/categories/api/get-categories';
@@ -27,11 +26,11 @@ export const ProfileRoute = () => {
   if (!categories.data) return null;
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col p-4 shadow-basic rounded-basic border-2">
       <div className=" flex flex-row gap-3 m-5 h-full w-full">
-        <div className="w-72 h-52 ">
+        <div className="w-72 h-52">
           <img
-            src="https://github.com/shadcn.png"
+            src="/avatar/user.jpeg"
             alt="User photo"
             className="object-cover h-full w-full rounded-basic"
           />
@@ -39,7 +38,7 @@ export const ProfileRoute = () => {
         <div className="flex flex-col w-full justify-between">
           <div>
             <Heading size={'h3'}>User Name</Heading>
-            <p className="text-gray-typo">Bonus Booster 25</p>
+            <p className="text-gray-typo ">Bonus Booster 25</p>
           </div>
 
           <div className="w-5/6 mt-5 bg-gray-300 rounded-full h-2.5 shadow-basic">
@@ -110,7 +109,7 @@ export const ProfileRoute = () => {
                 <CategoryCards
                   id={category.id}
                   name={category.name}
-                  image={category.image}
+                  image={category.name}
                   key={category.id}
                 />
               );
