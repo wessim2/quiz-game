@@ -9,7 +9,9 @@ export const CategoryRoute = () => {
 
   const categoryId = params.categoryId as string;
 
-  const { data: category } = useCategory({ categoryId });
+  const { data: category, isLoading } = useCategory({ categoryId });
+
+  if (isLoading) return <p>Loading ....</p>;
 
   if (!category) return null;
 
@@ -66,7 +68,7 @@ export const CategoryRoute = () => {
         >
           Return
         </Button>
-        <Link to={'/app/quizz'}>
+        <Link to={{ pathname: '/app/quizz' }}>
           <Button variant={'primary'} className="w-56 h-14">
             Start
           </Button>

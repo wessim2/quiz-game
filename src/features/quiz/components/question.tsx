@@ -5,8 +5,13 @@ import { AlertSubmitQuiz } from './alert-submit-quizz';
 import { Answer } from './answer';
 import { Timer } from './timer';
 import { Score } from './score';
+import { QuestionAnswers } from '@/types/api';
 
-export const Question = ({ questionAnswers }: any) => {
+type QuestionProps = {
+  questionAnswers: QuestionAnswers[];
+};
+
+export const Question: React.FC<QuestionProps> = ({ questionAnswers }) => {
   const [index, setIndex] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState({});
   const [quizEnd, setQuizEnd] = useState(false);
@@ -24,7 +29,11 @@ export const Question = ({ questionAnswers }: any) => {
       <p className=" text-gray-typo font-bold">
         Question : {removeCharacters(questionAnswers[index].question)}
       </p>
-      <Timer handleSubmitQuizz={handleSubmitQuizz} />
+      <Timer
+        quizEnd={quizEnd}
+        seconds={60}
+        handleSubmitQuizz={handleSubmitQuizz}
+      />
       <ul className="flex flex-col gap-4">
         {questionAnswers[index].answers.map((answer: any) => {
           return (
@@ -51,7 +60,6 @@ export const Question = ({ questionAnswers }: any) => {
           <AlertSubmitQuiz
             quizEnd={quizEnd}
             handleSubmitQuizz={handleSubmitQuizz}
-            setQuizEnd={setQuizEnd}
           />
         ) : (
           <Button onClick={() => handleQuestionNavigation(1)}>Next</Button>

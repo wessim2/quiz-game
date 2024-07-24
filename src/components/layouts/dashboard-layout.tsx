@@ -1,4 +1,4 @@
-import { Bell, Headset, Home, LogOut, Search, User } from 'lucide-react';
+import { Bell, Headset, Home, LogOut, Search } from 'lucide-react';
 import Button from '../ui/button/button';
 import { Input } from '../ui/form/input/input';
 import Heading from '../ui/heading/heading';

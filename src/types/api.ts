@@ -11,3 +11,10 @@ export type QuizQuestion = {
     correct_answer: string;
     incorrect_answers: string[] ;
   };
+
+
+export type QuestionAnswers = {
+    question: string;
+    answers: string[];
+    correct_answer: string;
+  };

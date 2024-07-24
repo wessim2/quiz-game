@@ -14,21 +14,17 @@ import Button from '@/components/ui/button/button';
 type AlertSubmitQuizProps = {
   quizEnd: boolean;
   handleSubmitQuizz: () => void;
-  setQuizEnd: (state: boolean) => void;
 };
 
 export const AlertSubmitQuiz = ({
   quizEnd,
   handleSubmitQuizz,
-  setQuizEnd,
 }: AlertSubmitQuizProps) => {
   return (
     <AlertDialog>
       {!quizEnd && (
         <AlertDialogTrigger>
-          <Button disabled={quizEnd} onClick={handleSubmitQuizz}>
-            Submit
-          </Button>
+          <Button disabled={quizEnd}>Submit</Button>
         </AlertDialogTrigger>
       )}
 
@@ -41,7 +37,7 @@ export const AlertSubmitQuiz = ({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={() => setQuizEnd(true)}>
+          <AlertDialogAction onClick={handleSubmitQuizz}>
             Confirm
           </AlertDialogAction>
         </AlertDialogFooter>
