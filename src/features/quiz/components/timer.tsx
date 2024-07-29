@@ -24,5 +24,9 @@ export const Timer = ({ handleSubmitQuizz, seconds, quizEnd }: TimerProps) => {
       handleSubmitQuizz();
     }
   }, [timeLeft]);
-  return <p>Time Left : {formatTime(timeLeft)}</p>;
+  return (
+    <p className="font-bold text-center text-yellow-700 text-xl">
+      Time Left : {formatTime(timeLeft)}
+    </p>
+  );
 };

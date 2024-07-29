@@ -1,6 +1,7 @@
 import { QueryClient } from '@tanstack/react-query';
 import { createBrowserRouter } from 'react-router-dom';
 import { AppRoot } from './app/root';
+import { ProtectedRoute } from '@/lib/auth';
 
 export const createRouter = (queryClient: QueryClient) =>
   createBrowserRouter([
@@ -13,7 +14,11 @@ export const createRouter = (queryClient: QueryClient) =>
     },
     {
       path: '/app',
-      element: <AppRoot />,
+      element: (
+        <ProtectedRoute>
+          <AppRoot />
+        </ProtectedRoute>
+      ),
       children: [
         {
           path: 'profile',

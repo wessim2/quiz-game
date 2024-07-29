@@ -1,11 +1,12 @@
 import Button from '@/components/ui/button/button';
 import { removeCharacters } from '@/utils/helpers';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AlertSubmitQuiz } from './alert-submit-quizz';
 import { Answer } from './answer';
 import { Timer } from './timer';
 import { Score } from './score';
 import { QuestionAnswers } from '@/types/api';
+import { Link } from 'react-router-dom';
 
 type QuestionProps = {
   questionAnswers: QuestionAnswers[];
@@ -24,9 +25,15 @@ export const Question: React.FC<QuestionProps> = ({ questionAnswers }) => {
     setQuizEnd(true);
   };
 
+  useEffect(() => {
+    return () => {
+      setQuizEnd(false);
+    };
+  }, []);
+
   return (
-    <>
-      <p className=" text-gray-typo font-bold">
+    <div className="flex flex-col gap-4 overflow-hidden m-3">
+      <p className="text-gray-typo font-bold text-2xl">
         Question : {removeCharacters(questionAnswers[index].question)}
       </p>
       <Timer
@@ -49,7 +56,7 @@ export const Question: React.FC<QuestionProps> = ({ questionAnswers }) => {
           );
         })}
       </ul>
-      <div>
+      <div className="flex flex-row gap-2">
         <Button
           disabled={index == 0}
           onClick={() => handleQuestionNavigation(-1)}
@@ -65,12 +72,21 @@ export const Question: React.FC<QuestionProps> = ({ questionAnswers }) => {
           <Button onClick={() => handleQuestionNavigation(1)}>Next</Button>
         )}
       </div>
+
       {quizEnd && (
-        <Score
-          selectedAnswers={selectedAnswers}
-          questionAnswers={questionAnswers}
-        />
+        <>
+          <Button
+            variant={'outline'}
+            className="mx-auto border-2 hover:opacity-55 border-gray-typo lg:mx-0"
+          >
+            <Link to="/app/profile">Go to profile</Link>
+          </Button>
+          <Score
+            selectedAnswers={selectedAnswers}
+            questionAnswers={questionAnswers}
+          />
+        </>
       )}
-    </>
+    </div>
   );
 };

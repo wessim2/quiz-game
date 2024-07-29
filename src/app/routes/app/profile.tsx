@@ -58,7 +58,7 @@ export const ProfileRoute = () => {
               </div>
               <div className="flex flex-col  items-center">
                 <Heading className="text-2xl">
-                  {user?.progress.fastest_time}mins
+                  {user?.progress.fastest_time} Sec
                 </Heading>
                 <p className="text-gray-typo text-center">Fastest Time</p>
               </div>

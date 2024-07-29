@@ -1,25 +1,33 @@
 import { Button } from '@/components/ui/button';
 import Heading from '@/components/ui/heading/heading';
+import { QuizContext } from '@/context/quiz-params-context';
 import { useCategory } from '@/features/categories/api/get-category';
+import { SelectQuizParams } from '@/features/quiz/components/select-quiz-params';
+import { useContext, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
 export const CategoryRoute = () => {
+  // context
+  const { setQuizParams } = useContext(QuizContext);
+
   const params = useParams();
   const navigate = useNavigate();
 
   const categoryId = params.categoryId as string;
-
   const { data: category, isLoading } = useCategory({ categoryId });
 
-  if (isLoading) return <p>Loading ....</p>;
+  useEffect(() => {
+    setQuizParams((prev) => ({ ...prev, category: categoryId }));
+  }, []);
 
+  if (isLoading) return <p>Loading ....</p>;
   if (!category) return null;
 
   return (
     <div className="flex flex-col h-full justify-between gap-8">
       <div className="flex flex-col gap-y-4 items-start">
         <Heading>{category.name} Quiz</Heading>
-        <p className="text-gray-typo">Read the following instructions</p>
+        <p className="text-gray-typo ">Read the following instructions</p>
       </div>
       <div className="flex flex-col lg:flex-row gap-x-10">
         <img
@@ -28,20 +36,7 @@ export const CategoryRoute = () => {
           className="w-96 h-52 rounded-basic"
         />
         <div className="flex flex-row gap-2 mt-3">
-          <div className="flex flex-col gap-4">
-            <p className="font-extrabold text-gray-typo text-2xl">Date :</p>
-            <p className="font-extrabold text-gray-typo text-2xl">
-              Time Limit :
-            </p>
-            <p className="font-extrabold text-gray-typo text-2xl">Attempts :</p>
-            <p className="font-extrabold text-gray-typo text-2xl">points :</p>
-          </div>
-          <div className="flex flex-col gap-4">
-            <p className="text-gray-typo text-2xl">13/10/2024</p>
-            <p className="text-gray-typo text-2xl">30mins</p>
-            <p className="text-gray-typo text-2xl">1</p>
-            <p className="text-gray-typo text-2xl">200 points</p>
-          </div>
+          <SelectQuizParams />
         </div>
       </div>
       <div className="flex flex-col gap-y-4">
@@ -58,7 +53,7 @@ export const CategoryRoute = () => {
           button. When finished, click the "Submit " button.
         </p>
       </div>
-      <div className="flex flex-row justify-between">
+      <div className="flex flex-row justify-between ">
         <Button
           variant={'primary'}
           className="w-56 h-14 mb-3 lg:mb-0"

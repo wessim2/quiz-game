@@ -1,4 +1,10 @@
+import { LoginForm } from '@/features/auth/components/login-form';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+
 export const LoginRoute = () => {
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const redirectTo = searchParams.get('redirectTo');
   return (
     <div className="overflow-hidden rounded-[0.5rem] border bg-background shadow">
       <div className="md:hidden">
@@ -57,34 +63,13 @@ export const LoginRoute = () => {
               </p>
             </div>
             <div className="grid gap-6">
-              <form>
-                <div className="grid gap-4">
-                  <div className="grid gap-4">
-                    <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 ">
-                      Email
-                    </label>
-                    <input
-                      className="flex h-9 w-full rounded-basic shadow-basic border border-input bg-transparent px-3 py-1 text-sm  transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
-                      id="email"
-                      placeholder="name@example.com"
-                      type="email"
-                    />
-                  </div>
-                  <div className="grid gap-4">
-                    <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 ">
-                      Password
-                    </label>
-                    <input
-                      className="flex h-9 w-full rounded-basic shadow-basic border border-input bg-transparent px-3 py-1 text-sm  transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
-                      placeholder="password"
-                      type="password"
-                    />
-                  </div>
-                  <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2">
-                    Sign In
-                  </button>
-                </div>
-              </form>
+              <LoginForm
+                onSuccess={() =>
+                  navigate(`${redirectTo ? `${redirectTo}` : '/app/profile'}`, {
+                    replace: true,
+                  })
+                }
+              />
               <div className="relative">
                 <div className="absolute inset-0 flex items-center">
                   <span className="w-full border-t"></span>

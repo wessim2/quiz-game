@@ -1,5 +1,5 @@
 import Button from '@/components/ui/button/button';
-import clsx from 'clsx';
+import { clsx } from 'clsx';
 
 type ButtonAnswerProps = {
   quizEnd: boolean;
@@ -29,7 +29,7 @@ export const Answer = ({
       disabled={quizEnd}
       key={answer}
       variant={'outline'}
-      className={clsx('hover:bg-slate-300 w-fit', {
+      className={clsx('hover:bg-slate-300 w-fit border-2 text-xl', {
         'border-yellow-400 border-4': selectedAnswers[index] === answer,
         'bg-green-400':
           quizEnd && questionAnswers[index].correct_answer === answer,
