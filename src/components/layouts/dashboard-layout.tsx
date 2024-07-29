@@ -4,8 +4,11 @@ import { Input } from '../ui/form/input/input';
 import Heading from '../ui/heading/heading';
 import { NavLink } from 'react-router-dom';
 import { cn } from '@/utils/cn';
+import { useLogout, useUser } from '@/lib/auth';
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
+  const { data: user } = useUser();
+  const logout = useLogout();
   const navigation = [
     { name: 'dashboard', to: './profile', icon: Home },
     { name: 'support', to: './support', icon: Headset },
@@ -35,7 +38,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
                 className="object-cover w-full h-full "
               />
             </div>
-            <p className="hidden md:flex">Name of avatar</p>
+            <p className="hidden md:flex">{user?.fullName}</p>
           </div>
         </div>
       </nav>
@@ -59,10 +62,16 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
                 </NavLink>
               ))}
             </div>
-            <div className='order-last bg-primary text-primary-foreground gap-4 w-52 h-16 inline-flex items-center justify-center whitespace-nowrap rounded-[30px] text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"'>
+
+            <Button
+              onClick={() => {
+                logout.mutate({});
+              }}
+              className="order-last bg-primary text-primary-foreground gap-4 w-52 h-16 inline-flex items-center justify-center whitespace-nowrap rounded-[30px] text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+            >
               <LogOut />
-              logout
-            </div>
+              Logout
+            </Button>
           </div>
         </aside>
         <div className="fixed inset-0 z-10 hidden pt-16"></div>

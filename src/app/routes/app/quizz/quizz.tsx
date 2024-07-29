@@ -12,7 +12,7 @@ export const QuizzRoute = () => {
   if (!data) return null;
 
   if (isLoading) return <p>Loading ....</p>;
-  console.log('data is', data);
+
   return (
     <div className="flex flex-col gap-6">
       <Questions data={data} />
