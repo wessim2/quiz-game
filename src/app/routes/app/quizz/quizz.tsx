@@ -1,7 +1,9 @@
+import { MainErrorFallback } from '@/components/errors/main';
 import { QuizContext } from '@/context/quiz-params-context';
 import { useQuiz } from '@/features/quiz/api/get-quiz';
 import { Questions } from '@/features/quiz/components/questions';
 import { useContext } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 
 export const QuizzRoute = () => {
   const { quizParams } = useContext(QuizContext);

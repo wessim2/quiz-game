@@ -10,6 +10,9 @@ export const CategoriesRoute = () => {
 
   if (!categories.data) return null;
 
+  if (search == 'error') {
+    throw new Error('this is test error');
+  }
   return (
     <div className="flex flex-col p-4 mx-auto lg:mx-0">
       <Heading size={'h2'}>Select Topic</Heading>
