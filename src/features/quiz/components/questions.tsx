@@ -12,7 +12,7 @@ export const Questions = ({ data }: any) => {
       return { question, answers, correct_answer } as QuestionAnswers;
     });
   }, [data]);
-
+  console.log(questionAnswers);
   return (
     <div>
       <Question questionAnswers={questionAnswers} />

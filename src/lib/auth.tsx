@@ -1,4 +1,6 @@
+import { AuthContext } from '@/context/auth-context';
 import { UserProfile } from '@/types/api';
+import { useContext } from 'react';
 import { configureAuth } from 'react-query-auth';
 import { Navigate, useLocation } from 'react-router-dom';
 import { z } from 'zod';
@@ -52,10 +54,11 @@ export const { useUser, useLogin, useLogout, useRegister, AuthLoader } =
   configureAuth(authConfig);
 
 export const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-  const user = useUser();
+  const { currentUser } = useContext(AuthContext);
+  console.log(currentUser);
   const location = useLocation();
 
-  if (!user.data) {
+  if (!currentUser) {
     return (
       <Navigate
         to={`/auth/login?redirectTo=${encodeURIComponent(location.pathname)}`}

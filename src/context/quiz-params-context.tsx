@@ -23,11 +23,7 @@ export const QuizContext = createContext<QuizContextType>(
   {} as QuizContextType,
 );
 
-type Props = {
-  children: React.ReactNode;
-};
-
-export const QuizProvider = ({ children }: Props) => {
+export const QuizProvider = ({ children }: React.PropsWithChildren) => {
   const [quizParams, setQuizParams] = useState<QuizParams>(initialState);
 
   return (

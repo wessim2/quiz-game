@@ -9,9 +9,10 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/form/input/input';
 import { useToast } from '@/components/ui/use-toast';
-import { signInUser } from '@/firebase/firebase';
-import { LoginInputSchema, loginSchema } from '@/lib/auth';
+import { signUpUser } from '@/firebase/firebase';
+import { RegisterInputSchema, registerSchema } from '@/types/register';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
@@ -19,27 +20,31 @@ type LoginFormProps = {
   onSuccess: () => void;
 };
 
-export const LoginForm = ({ onSuccess }: LoginFormProps) => {
+export const RegisterForm = ({ onSuccess }: LoginFormProps) => {
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  const form = useForm<loginSchema>({
-    resolver: zodResolver(LoginInputSchema),
+  const form = useForm<registerSchema>({
+    resolver: zodResolver(RegisterInputSchema),
   });
 
-  async function onSubmit(value: loginSchema) {
+  async function onSubmit(value: registerSchema) {
     try {
+      setIsLoading(true);
       // Send the email and password to firebase
-      const userCredential = await signInUser(value.email, value.password);
+      const userCredential = await signUpUser(value.email, value.password);
       if (userCredential) {
-        navigate('/app/profile');
+        navigate('/auth/login');
       }
+      setIsLoading(false);
     } catch (error: any) {
       toast({
-        title: 'Login failed',
+        title: 'User Registration Failed',
         description: error.message,
         variant: 'destructive',
       });
+      setIsLoading(false);
     }
   }
 
@@ -73,11 +78,29 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
               </FormItem>
             )}
           />
+          <FormField
+            control={form.control}
+            name="confirmPassword"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Confirm Password</FormLabel>
+                <FormControl>
+                  <Input
+                    type="password"
+                    placeholder="Confirm password"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <Button
+            isLoading={isLoading}
             className="mt-4 inline-flex items-center justify-center mx-auto whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2"
             type="submit"
           >
-            Login
+            Register
           </Button>
         </form>
       </Form>

@@ -13,6 +13,13 @@ export const createRouter = (queryClient: QueryClient) =>
       },
     },
     {
+      path: '/auth/register',
+      lazy: async () => {
+        let { RegisterRoute } = await import('./auth/register');
+        return { Component: RegisterRoute };
+      },
+    },
+    {
       path: '/app',
       element: (
         <ProtectedRoute>

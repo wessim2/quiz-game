@@ -1,8 +1,8 @@
 import GoogleLogin from '@/features/auth/components/google-login';
-import { LoginForm } from '@/features/auth/components/login-form';
+import { RegisterForm } from '@/features/auth/components/register-form';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 
-export const LoginRoute = () => {
+export const RegisterRoute = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const redirectTo = searchParams.get('redirectTo');
@@ -11,9 +11,9 @@ export const LoginRoute = () => {
       <div className="container grid relative h-[800px] flex-col  items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
         <Link
           className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2 absolute right-4 top-4 md:right-8 md:top-8"
-          to="/auth/register"
+          to="/auth/login"
         >
-          Register
+          Login
         </Link>
         <div className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex">
           <div className="absolute bg-cover inset-0 bg-zinc-900 blur-sm">
@@ -35,16 +35,13 @@ export const LoginRoute = () => {
           <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
             <div className="flex flex-col space-y-2 text-center">
               <h1 className="text-3xl font-extrabold tracking-tight">
-                Login to your Account
+                Create a new account
               </h1>
-              <p className="text-sm text-gray-typo text-muted-foreground">
-                with your registered Email Address
-              </p>
             </div>
             <div className="grid gap-6">
-              <LoginForm
+              <RegisterForm
                 onSuccess={() =>
-                  navigate(`${redirectTo ? `${redirectTo}` : '/app/profile'}`, {
+                  navigate(`${redirectTo ? `${redirectTo}` : '/auth/login'}`, {
                     replace: true,
                   })
                 }
@@ -55,7 +52,7 @@ export const LoginRoute = () => {
                 </div>
                 <div className="relative flex justify-center text-xs uppercase">
                   <span className="bg-background px-2 text-sm text-gray-typo text-muted-foreground">
-                    Or continue with
+                    Or Register with
                   </span>
                 </div>
               </div>

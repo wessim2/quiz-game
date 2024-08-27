@@ -4,11 +4,11 @@ import { Input } from '../ui/form/input/input';
 import Heading from '../ui/heading/heading';
 import { NavLink } from 'react-router-dom';
 import { cn } from '@/utils/cn';
-import { useLogout, useUser } from '@/lib/auth';
+import { useContext } from 'react';
+import { AuthContext } from '@/context/auth-context';
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
-  const { data: user } = useUser();
-  const logout = useLogout();
+  const { currentUser, signOut } = useContext(AuthContext);
   const navigation = [
     { name: 'dashboard', to: './profile', icon: Home },
     { name: 'support', to: './support', icon: Headset },
@@ -33,12 +33,12 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
           <div className="flex flex-row items-center gap-2">
             <div className="flex items-center justify-center rounded-full overflow-hidden w-12 h-12 lg:w-16 lg:h-16 bg-gray-200`">
               <img
-                src="/avatar/user.jpeg"
+                src={currentUser?.photoURL || '/avatar/user.jpeg'}
                 alt="User photo"
-                className="object-cover w-full h-full "
+                className="object-cover w-full h-full"
               />
             </div>
-            <p className="hidden md:flex">{user?.fullName}</p>
+            <p className="hidden md:flex">{currentUser?.displayName}</p>
           </div>
         </div>
       </nav>
@@ -65,7 +65,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
 
             <Button
               onClick={() => {
-                logout.mutate({});
+                signOut();
               }}
               className="order-last bg-primary text-primary-foreground gap-4 w-52 h-16 inline-flex items-center justify-center whitespace-nowrap rounded-[30px] text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
             >

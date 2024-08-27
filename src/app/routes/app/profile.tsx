@@ -1,32 +1,34 @@
 import Button from '@/components/ui/button/button';
 import { CategoryCards } from '@/components/ui/cards/category-card';
 import Heading from '@/components/ui/heading/heading';
+import { AuthContext, useAuth } from '@/context/auth-context';
 import { useCategories } from '@/features/categories/api/get-categories';
 import { useUser } from '@/lib/auth';
 import { Check, Clock, Flag } from 'lucide-react';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 export const ProfileRoute = () => {
   const u = useUser();
   const { data: user } = u;
-
+  const { currentUser } = useAuth();
   const categories = useCategories();
 
   if (!categories.data) return null;
-  console.log(u.data);
+  console.log(currentUser?.photoURL);
   return (
     <div className="flex flex-col p-4 shadow-basic rounded-basic border-2">
       <div className="flex flex-row gap-3 m-5 h-full w-full">
         <div className="w-72 h-52 hidden lg:block">
           <img
-            src={user?.image}
+            src={currentUser?.photoURL || '/avatar/user.jpeg'}
             alt="User photo"
             className="object-cover h-full w-full rounded-basic"
           />
         </div>
         <div className="flex flex-col w-full justify-between">
           <div>
-            <Heading size={'h3'}>{user?.fullName}</Heading>
+            <Heading size={'h3'}>{currentUser?.displayName}</Heading>
             <p className="text-gray-typo text-center lg:text-left ">
               {user?.title}
             </p>
